@@ -20,12 +20,27 @@ const App = () => {
   /* function that going to add the product to cart with this
  id of the product and the quantity */
   const handleAddToCart = async (productId, quantity) => {
-    const item = await commerce.cart.add(productId, quantity);
+    const { cart } = await commerce.cart.add(productId, quantity);
     /* with setCart, we can update the cart after item add being 
     added and we use "handleAddToCart" inside the single product in the button. 
     In Order to d that we have to pass it over <Products />  by props via onAddToCart
     to reach the button inside Product.js component */
-    setCart(item.cart);
+    setCart(cart);
+  };
+
+  const handleUpdateCartQty = async (productId, quantity) => {
+    const { cart } = await commerce.cart.update(productId, { quantity });
+    setCart(cart);
+  };
+
+  const handleRemoveFromCart = async (productId) => {
+    const { cart } = await commerce.cart.remove(productId);
+    setCart(cart);
+  };
+
+  const handleEmptyCart = async () => {
+    const { cart } = await commerce.cart.empty();
+    setCart(cart);
   };
 
   useEffect(() => {
@@ -46,7 +61,12 @@ const App = () => {
             <Products products={products} onAddToCart={handleAddToCart} />
           </Router>
           <Router exact path="/cart">
-            <Cart cart={cart} />
+            <Cart
+              cart={cart}
+            handleUpdateCartQty={handleUpdateCartQty}
+            handleRemoveFromCart={handleRemoveFromCart}
+            handleEmptyCart={handleEmptyCart}
+            />
           </Router>
         </Switch>
       </div>
