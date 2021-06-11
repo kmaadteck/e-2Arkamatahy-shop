@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { commerce } from "./lib/commerce";
 import { Products, Navbar, Cart } from "./components";
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const App = () => {
     setCart(cart); */
     setCart(await commerce.cart.retrieve());
   };
-/* function that going to add the product to cart with this
+  /* function that going to add the product to cart with this
  id of the product and the quantity */
   const handleAddToCart = async (productId, quantity) => {
     const item = await commerce.cart.add(productId, quantity);
@@ -35,14 +35,22 @@ const App = () => {
   console.log(cart);
 
   return (
-    <div>
-      {/* Function that add total items contained in the cart to be displayed inside
+    <Router>
+      <div>
+        {/* Function that add total items contained in the cart to be displayed inside
        the <Badge/> into the <Navbar />. the "total_items" is one of parameters of Cart 
        reached via console log  */}
-      <Navbar totalItems={cart.total_items}/>
-      {/* <Products products={products} onAddToCart={handleAddToCart} /> */}
-      <Cart cart={cart} />
-    </div>
+        <Navbar totalItems={cart.total_items} />
+        <Switch>
+          <Router exact path="/">
+            <Products products={products} onAddToCart={handleAddToCart} />
+          </Router>
+          <Router exact path="/cart">
+            <Cart cart={cart} />
+          </Router>
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
