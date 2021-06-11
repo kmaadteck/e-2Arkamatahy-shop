@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "..\\..\\..\\The_Full_Stack_Junkie\\Mern-shopping-cart"
+	},
+	{
+		"path": "."
+	},
+	{
+		"path": "..\\..\\..\\codeAffection-tutos\\PostMessage_app"
+	}
+],
+  "settings": {
+    "git.ignoreLimitWarning": true
+  }
+}
